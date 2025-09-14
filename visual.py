@@ -64,8 +64,9 @@ def visualize_attention_maps(model, image_path, output_path, device='cuda'):
     model.eval()
     with torch.no_grad():
         # Forward pass to get attention maps
-        _ = model(input_tensor)
-        attentions = model.attention_maps
+        _, attentions = model(input_tensor,return_attention=True)
+        print(attentions.keys())
+        #attentions = model.attention_maps
     
     if attentions is None:
         print("No attention maps found in the model")
@@ -74,7 +75,7 @@ def visualize_attention_maps(model, image_path, output_path, device='cuda'):
     # Process attention maps
     # attentions shape: [batch_size, num_heads, num_patches, num_patches]
     # We'll use the CLS token attention to all patches
-    attentions = attentions[0]  # Remove batch dimension
+    attentions = attentions["blocks.11.attn.softmax"][0]  # Remove batch dimension
     nh = attentions.shape[0]  # Number of attention heads
     
     # Average attention across heads for a general view
@@ -223,7 +224,7 @@ def create_attention_visualizations(checkpoint_path, image_dir, output_dir, devi
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='DINO Attention Visualization')
-    parser.add_argument('--checkpoint', type=str, default= "/content/dino_coco_checkpoints",
+    parser.add_argument('--checkpoint', type=str, default= "/content/dino_coco_checkpoints/best_checkpoint.pth",
                        help='Path to model checkpoint')
     parser.add_argument('--image_dir', type=str, default="/content/object-detection-BBD/data/100k/test",
                        help='Directory containing input images')

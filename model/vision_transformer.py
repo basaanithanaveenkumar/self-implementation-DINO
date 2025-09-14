@@ -1,8 +1,10 @@
 # Now let's define the VisionTransformerWrapper with a fix for the parameter freezing
-from dino_mlp import *
+from .dino_mlp import *
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import timm
+from bbd_dataset import create_coco_dataloader
 
 class VisionTransformerWrapper(nn.Module):
     """

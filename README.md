@@ -8,11 +8,11 @@ A clean, from-scratch PyTorch implementation of **DINO (Self-Distillation with N
 
 ## Training Visualization
 
-The following GIF demonstrates the training progress of our DINO implementation:
+<div align="center">
+  <img src="./extras/a62ob0.gif" width="600" alt="DINO Training Progress">
+</div>
 
-![DINO Training Progress](./extras/a62ob0.gif)
-
-*This visualization shows how the model learns to segment and understand images over training epochs.*
+**Description:** This animation demonstrates the training progression of our self-implemented DINO model, showing improved feature extraction and segmentation capabilities over time.
 
 ## 🔍 What is Self-Supervised Learning?
 

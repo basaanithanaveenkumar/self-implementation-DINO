@@ -95,6 +95,53 @@ The teacher acts as an ensemble of previous student models, capturing robust fea
 | **Conceptual Simplicity** | Avoids complex contrastive learning mechanisms |
 
 
+```markdown
+# Setup Instructions
+
+## 1. Clone the Repository
+```bash
+git clone https://github.com/basaanithanaveenkumar/object-detection-BBD.git
+cd object-detection-BBD
+```
+
+## 2. Create Data Directory
+```bash
+mkdir -p data
+```
+
+## 3. Download Dataset
+```bash
+python scripts/download_dataset.py
+```
+
+## 4. Organize Directory Structure
+```bash
+mv data/100k/val data/100k/valid
+```
+
+## 5. Convert to COCO Format
+```bash
+python scripts/convert_to_coco.py
+```
+
+## Workflow Summary
+This setup process:
+1. Clones the object detection project repository
+2. Creates the necessary directory structure
+3. Downloads the BBD (Berkeley DeepDrive) dataset
+4. Renames the validation directory to match expected conventions
+5. Converts the BBD dataset format to standard COCO format for compatibility with object detection frameworks
+```
+
+
+
+
+
+
+
+
+
+
 Based on the original paper:  
 **Emerging Properties in Self-Supervised Vision Transformers**  
 *Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, Armand Joulin*  

@@ -34,8 +34,6 @@ Self-Supervised Learning (SSL) is a revolutionary paradigm where models learn re
 
 **DINO (DIstillation with NO labels)** is a groundbreaking SSL algorithm that uses a simple yet powerful self-distillation framework to learn semantically meaningful image representations, even discovering object segmentation capabilities without any labels.
 
-![DINO Architecture](https://github.com/facebookresearch/dino/raw/main/.github/dino.gif)
-
 ## 🏗️ Key Components of DINO
 
 ### Teacher-Student Framework
@@ -54,6 +52,16 @@ loss = distillation_loss(
     teacher_network(global_view)
 )
 ```
+The EMA update rule for a parameter vector is:
+
+$$
+\theta_{\text{teacher}} \gets m \times \theta_{\text{teacher}} + (1 - m) \times \theta_{\text{student}}
+$$
+
+Where:
+- $\theta_{\text{teacher}}$: Teacher model parameters
+- $\theta_{\text{student}}$: Student model parameters  
+- $m$: Momentum coefficient (typically close to 1, e.g., 0.99, 0.996)
 
 ### Multi-Crop Strategy
 

@@ -6,6 +6,14 @@
 
 A clean, from-scratch PyTorch implementation of **DINO (Self-Distillation with No Labels)**, the groundbreaking self-supervised learning method that discovers meaningful visual representations without any human annotations.
 
+## Training Visualization
+
+The following GIF demonstrates the training progress of our DINO implementation:
+
+![DINO Training Progress](./extras/a62ob0.gif)
+
+*This visualization shows how the model learns to segment and understand images over training epochs.*
+
 ## 🔍 What is Self-Supervised Learning?
 
 Self-Supervised Learning (SSL) is a revolutionary paradigm where models learn representations from **unlabeled data** by creating their own supervision signals. Instead of relying on human-annotated labels, SSL systems generate "pretext tasks" that enable models to learn rich, transferable representations.

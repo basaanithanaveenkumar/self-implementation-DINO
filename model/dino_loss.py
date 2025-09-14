@@ -32,9 +32,9 @@ class DINOLoss(nn.Module):
         self.center_momentum = center_momentum
         self.nepochs = nepochs
         self.warmup_teacher_temp_epochs = warmup_teacher_temp_epochs
-        
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         # Register buffer for center
-        self.register_buffer("center", torch.zeros(1, out_dim))
+        self.register_buffer("center", torch.zeros(1, out_dim,device=device))
         
         # Temperature scheduling
         self.warmup_teacher_temp = warmup_teacher_temp

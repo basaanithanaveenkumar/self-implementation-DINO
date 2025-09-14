@@ -9,7 +9,7 @@ A clean, from-scratch PyTorch implementation of **DINO (Self-Distillation with N
 ## Training Visualization
 
 <div align="center">
-  <img src="./extras/a62ob0.gif" width="600" alt="DINO Training Progress">
+  <img src="./extras/animation.gif" width="900" alt="DINO Training Progress">
 </div>
 
 **Description:** This animation demonstrates the training progression of our self-implemented DINO model, showing improved feature extraction and segmentation capabilities over time.

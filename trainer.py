@@ -8,6 +8,10 @@ import logging
 from pathlib import Path
 from model.vision_transformer import *
 from model.dino_loss import *
+import argparse
+
+
+
 #vibe codd using deepseek
 
 # Set up logging
@@ -237,11 +241,26 @@ class DINOTrainer:
         
         logger.info(f"Loaded checkpoint from epoch {self.epoch} with loss {checkpoint['loss']:.4f}")
 
-if __name__ == "__main__":
+def main():
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description='DINO Training Script')
+    parser.add_argument('--data_dir', type=str, required=True,
+                       help='Path to the COCO dataset directory')
+    parser.add_argument('--batch_size', type=int, default=4,
+                       help='Batch size for training')
+    parser.add_argument('--num_workers', type=int, default=4,
+                       help='Number of data loading workers')
+    parser.add_argument('--out_dir', type=str, default="./dino_coco_checkpoints",
+                       help='Directory to save checkpoints')
+    parser.add_argument('--use_amp', action='store_true', default=True,
+                       help='Use Automatic Mixed Precision')
+    
+    args = parser.parse_args()
+    
     # Set device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    # Initialize models (using your VisionTransformerWrapper)
+    # Initialize models
     model_name = "vit_small_patch16_224"
     img_size = 224
     std_img_size = 224
@@ -262,31 +281,31 @@ if __name__ == "__main__":
         pretrained=True,
         is_teacher=True
     )
-    # Example configuration (adjust values based on your setup)
+    
+    # Training configuration
     ncrops = 6  # 2 global crops + 4 local crops
     warmup_teacher_temp = 0.04
     teacher_temp = 0.07
     warmup_teacher_temp_epochs = 30
     nepochs = 100
 
-    # Initialize DINOLoss with the required arguments
+    # Initialize DINOLoss
     loss_fn = DINOLoss(
-        #ncrops=ncrops,
         warmup_teacher_temp=warmup_teacher_temp,
         teacher_temp=teacher_temp,
         warmup_teacher_temp_epochs=warmup_teacher_temp_epochs,
         nepochs=nepochs,
-        out_dim=1024
+        out_dim=out_dim
     )
     
-    # Create COCO data loader
-    dataDir = "/content/object-detection-BBD/data/100k/test"
+    # Create COCO data loader using command line argument
+    dataDir = args.data_dir
     annFile = f"{dataDir}/_annotations.coco.json"
     dataloader = create_coco_dataloader(
         annFile=annFile,
         dataDir=dataDir,
-        batch_size=4,
-        num_workers=4,
+        batch_size=args.batch_size,
+        num_workers=args.num_workers,
         global_crop_size=224,
         local_crop_size=96,
     )
@@ -306,13 +325,15 @@ if __name__ == "__main__":
         loss_fn=loss_fn,
         optimizer=optimizer,
         device=device,
-        out_dir="./dino_coco_checkpoints",
+        out_dir=args.out_dir,
         warmup_epochs=10,
         total_epochs=100,
         save_freq=10,
-        use_amp=True,
-        # use_ddp=False  # Set to True for multi-GPU training
+        use_amp=args.use_amp,
     )
     
     # Start training
     trainer.train()
+
+if __name__ == "__main__":
+    main()

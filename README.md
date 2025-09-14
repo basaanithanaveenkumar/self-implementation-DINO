@@ -63,6 +63,17 @@ Where:
 - $\theta_{\text{student}}$: Student model parameters  
 - $m$: Momentum coefficient (typically close to 1, e.g., 0.99, 0.996)
 
+- # Why EMA is Used in DINO
+
+## 1. Stable Targets
+The teacher network provides consistent, slowly evolving targets for the student to learn from.
+
+## 2. Prevents Collapse
+EMA helps avoid the trivial solution where both networks output constant representations.
+
+## 3. Improved Generalization
+The teacher acts as an ensemble of previous student models, capturing robust features.
+
 ### Multi-Crop Strategy
 
 - **Global Views** (e.g., 224×224 pixels) → Teacher Network
